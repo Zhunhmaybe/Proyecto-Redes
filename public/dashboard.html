@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banco Pacifico - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- FontAwesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>
+        Banco Pacifico
+        <small style="font-size: 0.8rem; opacity: 0.8"
+          >[Sucursal: <span id="branch-display">Loading...</span>]</small
+        >
+      </h1>
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i> Hola,
+        <span id="user-name-display">Empleado</span>
+        <button id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Salir
+        </button>
+      </div>
+    </header>
+
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h3>Menú</h3>
+        <button class="menu-btn active" onclick="showSection('clients')">
+          <i class="fas fa-users"></i> Clientes
+        </button>
+        <button class="menu-btn" onclick="showSection('accounts')">
+          <i class="fas fa-wallet"></i> Cuentas
+        </button>
+        <button class="menu-btn" onclick="showSection('transactions')">
+          <i class="fas fa-exchange-alt"></i> Transacciones
+        </button>
+        <button class="menu-btn" onclick="showSection('admin')">
+          <i class="fas fa-cogs"></i> Administración
+        </button>
+        <button class="menu-btn" onclick="showSection('my-data'); app.loadMyData()">
+          <i class="fas fa-user-edit"></i> Mis Datos
+        </button>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Section: Clients -->
+        <section id="section-clients" class="section-view active">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Listado de Clientes</h2>
+            <button class="btn-primary" onclick="app.showClientModal()">Nuevo Cliente</button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre Completo</th>
+                  <th>DNI</th>
+                  <th>Email</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clients-table-body">
+                <!-- Data populated by JS -->
+                <tr>
+                  <td colspan="5" style="text-align: center">Cargando...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section: Accounts -->
+        <section id="section-accounts" class="section-view">
+          <h2>Cuentas Bancarias</h2>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nro Cuenta</th>
+                  <th>Titular</th>
+                  <th>Saldo</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="accounts-table-body">
+                <!-- Data populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section: Transactions -->
+        <section id="section-transactions" class="section-view">
+          <h2>Nueva Transacción</h2>
+          <div class="card" style="max-width: 500px">
+            <h3>Realizar Operación</h3>
+            <form id="transaction-form">
+              <div class="form-group">
+                <label>Tipo Operación</label>
+                <select class="form-control" id="trans-type">
+                  <option value="deposit">Depósito</option>
+                  <option value="withdraw">Retiro</option>
+                  <option value="transfer">Transferencia</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Cuenta Origen</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="00100001"
+                />
+              </div>
+              <div class="form-group">
+                <label>Monto</label>
+                <input type="number" class="form-control" placeholder="0.00" />
+              </div>
+              <button class="btn-primary">Procesar</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Section: Admin (DR Info) -->
+        <section id="section-admin" class="section-view">
+          <h2>🚑 Centro de Recuperación de Desastres (DR)</h2>
+          
+          <!-- Info de Sucursal -->
+          <div style="background: linear-gradient(135deg, var(--cool-sky) 0%, var(--cool-mint) 100%); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; color: white;">
+            <h3 style="margin: 0 0 0.5rem 0; color: white;">📍 Sucursal Actual</h3>
+            <strong style="font-size: 1.2rem;" id="currentBranchName">Cargando...</strong><br/>
+            <small>IP: <span id="currentBranchIp">...</span> | ID: <span id="currentBranchId">...</span></small>
+          </div>
+
+          <!-- Grid de 2 columnas -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+            
+            <!-- Backups Locales -->
+            <div class="card">
+              <h3>📂 Mis Backups (Locales)</h3>
+              <button class="btn-primary" onclick="crearBackupManual()" style="background: var(--gradient-cool); margin-bottom: 1rem; width: 100%;">
+                ➕ Crear Backup Ahora
+              </button>
+              <div id="localBackupsList" style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;">
+                <div style="text-align: center; padding: 2rem; color: #999;">Cargando...</div>
+              </div>
+            </div>
+
+            <!-- Backups Recibidos -->
+            <div class="card">
+              <h3>📥 Backups Recibidos (Otras Sucursales)</h3>
+              <button class="btn-primary" onclick="cargarBackupsRemotos()" style="background: var(--gradient-warm); margin-bottom: 1rem; width: 100%;">
+                🔄 Actualizar Lista
+              </button>
+              <div id="peerBackupsList" style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;">
+                <div style="text-align: center; padding: 2rem; color: #999;">Esperando datos...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estado de Replicación -->
+          <div class="card" style="background: linear-gradient(135deg, #FFF4E6 0%, #FFE6E6 100%);">
+            <h3>🔄 Estado de Replicación</h3>
+            <div id="replication-status">
+              <p><strong>Auto-Replicación:</strong> <span id="auto-replicate-status">Verificando...</span></p>
+              <p><strong>Intervalo de Backup:</strong> <span id="backup-interval">5</span> minutos</p>
+              <p><strong>Último Backup:</strong> <span id="last-backup-time">--</span></p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Section: Mis Datos -->
+        <section id="section-my-data" class="section-view">
+          <h2>Mis Datos Personales</h2>
+          <div class="card" style="max-width: 600px">
+            <form id="my-data-form">
+              <div class="form-group">
+                <label>Código Empleado</label>
+                <input type="text" class="form-control" id="my-codigo" disabled />
+              </div>
+              <div class="form-group">
+                <label>Apellido Paterno</label>
+                <input type="text" class="form-control" id="my-paterno" required />
+              </div>
+               <div class="form-group">
+                <label>Apellido Materno</label>
+                <input type="text" class="form-control" id="my-materno" required />
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="my-nombre" required />
+              </div>
+              <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" class="form-control" id="my-ciudad" required />
+              </div>
+              <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" class="form-control" id="my-direccion" required />
+              </div>
+               <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" class="form-control" id="my-usuario" required />
+              </div>
+               <div class="form-group">
+                <label>Clave</label>
+                <input type="password" class="form-control" id="my-clave" required />
+              </div>
+
+              <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button type="submit" class="btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn-primary" style="background-color: #e74c3c;" onclick="app.deleteMyAccount()">Eliminar Cuenta</button>
+              </div>
+            </form>
+          </div>
+        </section>
+        </section>
+        
+        <!-- Client Modal (Hidden by default) -->
+        <div id="client-modal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <h3 id="client-modal-title">Nuevo Cliente</h3>
+            <form id="client-form">
+              <input type="hidden" id="client-id">
+              <div class="form-group"><label>Código</label><input type="text" id="client-codigo" class="form-control" required></div>
+              <div class="form-group"><label>Paterno</label><input type="text" id="client-paterno" class="form-control" required></div>
+              <div class="form-group"><label>Materno</label><input type="text" id="client-materno" class="form-control" required></div>
+              <div class="form-group"><label>Nombre</label><input type="text" id="client-nombre" class="form-control" required></div>
+              <div class="form-group"><label>DNI</label><input type="text" id="client-dni" class="form-control" required></div>
+              <div class="form-group"><label>Ciudad</label><input type="text" id="client-ciudad" class="form-control" required></div>
+              <div class="form-group"><label>Dirección</label><input type="text" id="client-direccion" class="form-control" required></div>
+              <div class="form-group"><label>Teléfono</label><input type="text" id="client-telefono" class="form-control"></div>
+              <div class="form-group"><label>Email</label><input type="email" id="client-email" class="form-control"></div>
+              <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="document.getElementById('client-modal').style.display='none'">Cancelar</button>
+                <button type="submit" class="btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+      // Simple View Switcher
+      function showSection(sectionId) {
+        // Hide all
+        document
+          .querySelectorAll(".section-view")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".menu-btn")
+          .forEach((el) => el.classList.remove("active"));
+
+        // Show target
+        document.getElementById("section-" + sectionId).classList.add("active");
+
+        // Update Menu Active State (Approximate)
+        event.target.classList.add("active");
+      }
+
+      // Load Branch Info
+      fetch("/api")
+        .then((res) => res.json())
+        .then((data) => {
+          document.getElementById("branch-display").textContent = data.branch.name || data.branch;
+        });
+
+      // ==================== DR DASHBOARD FUNCTIONS ====================
+      
+      // Cargar Info Inicial del DR
+      async function initDR() {
+        try {
+          const res = await fetch('/api/branches');
+          const data = await res.json();
+          
+          document.getElementById('currentBranchName').textContent = data.current.name;
+          document.getElementById('currentBranchIp').textContent = data.current.ip;
+          document.getElementById('currentBranchId').textContent = data.current.id;
+          
+          // Cargar listas
+          cargarBackupsLocales();
+          cargarBackupsRemotos();
+        } catch(e) {
+          console.error('Error inicializando DR:', e);
+        }
+      }
+
+      // Listar Backups Locales
+      async function cargarBackupsLocales() {
+        try {
+          const res = await fetch('/api/backup/list');
+          const backups = await res.json();
+          const container = document.getElementById('localBackupsList');
+          
+          if(!backups || backups.length === 0) {
+            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #999;">No hay backups locales</div>';
+            return;
+          }
+
+          container.innerHTML = backups.map(b => `
+            <div style="border-bottom: 1px solid var(--border-color); padding: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <div style="flex: 1;">
+                <strong style="font-size: 0.9rem;">📄 ${b.filename}</strong><br/>
+                <small style="color: #666;">${new Date(b.created).toLocaleString('es-ES')} · ${(b.size/1024).toFixed(2)} KB</small>
+              </div>
+              <button onclick="replicarBackup('${b.filename}')" style="background: var(--gradient-cool); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                📤 Replicar
+              </button>
+            </div>
+          `).join('');
+
+          // Actualizar último backup
+          if(backups.length > 0) {
+            document.getElementById('last-backup-time').textContent = new Date(backups[0].created).toLocaleString('es-ES');
+          }
+        } catch(e) {
+          console.error('Error cargando backups locales:', e);
+        }
+      }
+
+      // Listar Backups Remotos
+      async function cargarBackupsRemotos() {
+        try {
+          const res = await fetch('/api/peer-backups');
+          const data = await res.json();
+          const container = document.getElementById('peerBackupsList');
+          
+          if(!data.backups || data.backups.length === 0) {
+            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #999;">No hay backups recibidos de otras sucursales</div>';
+            return;
+          }
+
+          container.innerHTML = data.backups.map(b => `
+            <div style="border-bottom: 1px solid var(--border-color); padding: 0.75rem;">
+              <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div style="flex: 1;">
+                  <strong style="font-size: 0.9rem;">📥 ${b.filename}</strong><br/>
+                  <small style="color: #666;">${new Date(b.created).toLocaleString('es-ES')}</small><br/>
+                  <small style="color: #999;">Tamaño: ${(b.size/1024).toFixed(2)} KB</small>
+                </div>
+                <button onclick="alert('Funcionalidad de Restaurar en desarrollo')" style="background: var(--gradient-warm); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                  ♻️ Restaurar
+                </button>
+              </div>
+            </div>
+          `).join('');
+        } catch(e) {
+          console.error('Error cargando backups remotos:', e);
+        }
+      }
+
+      // Crear Backup Manual
+      async function crearBackupManual() {
+        if(!confirm('¿Desea crear un nuevo backup manual de la base de datos?')) return;
+        
+        try {
+          const btn = event.target;
+          btn.disabled = true;
+          btn.textContent = '⏳ Creando...';
+          
+          const res = await fetch('/api/backup/create', { method: 'POST' });
+          const data = await res.json();
+          
+          if(data.success) {
+            alert(`✅ Backup creado: ${data.filename}\nTamaño: ${(data.size/1024).toFixed(2)} KB`);
+            cargarBackupsLocales();
+          } else {
+            alert('❌ Error al crear backup');
+          }
+        } catch(e) {
+          alert('❌ Error de red: ' + e.message);
+        } finally {
+          const btn = event.target;
+          btn.disabled = false;
+          btn.textContent = '➕ Crear Backup Ahora';
+        }
+      }
+
+      // Replicar a Todas las Sucursales
+      async function replicarBackup(filename) {
+        if(!confirm(`¿Enviar "${filename}" a TODAS las demás sucursales?`)) return;
+        
+        try {
+          const btn = event.target;
+          btn.disabled = true;
+          btn.textContent = '📤 Enviando...';
+          
+          const res = await fetch(`/api/replicate/${filename}`, { method: 'POST' });
+          const data = await res.json();
+          
+          const successful = data.results.filter(r => r.status === 'success').length;
+          alert(`📤 Replicación completada:\n✅ Exitosos: ${successful}/${data.total}\n❌ Fallidos: ${data.total - successful}\n\n(Revisa la consola del servidor para detalles)`);
+          
+        } catch(e) {
+          alert('❌ Error: ' + e.message);
+        } finally {
+          const btn = event.target;
+          btn.disabled = false;
+          btn.textContent = '📤 Replicar';
+        }
+      }
+
+      // Iniciar DR al cargar la página
+      document.addEventListener('DOMContentLoaded', () => {
+        initDR();
+        // Auto-actualizar cada 30 segundos
+        setInterval(() => {
+          cargarBackupsLocales();
+          cargarBackupsRemotos();
+        }, 30000);
+      });
+    </script>
+  </body>
+</html>
