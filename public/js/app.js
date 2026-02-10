@@ -1,22 +1,17 @@
 const app = {
-    // API Base URL (Relative path since we serve from same origin)
     apiUrl: '/api',
 
-    // State
     employee: null,
 
     init: () => {
-        // Check authentication
         const empNum = localStorage.getItem('employeeId');
         if (empNum) {
             app.employee = { codigo: empNum };
         }
 
-        // DOM Elements
         const loginForm = document.getElementById('login-form');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // Event Listeners
         if (loginForm) {
             loginForm.addEventListener('submit', app.handleLogin);
         }
@@ -25,10 +20,9 @@ const app = {
             logoutBtn.addEventListener('click', app.handleLogout);
         }
 
-        // Load dashboard data if on dashboard page
         if (window.location.pathname.includes('dashboard.html')) {
             if (!app.employee) {
-                window.location.href = '/index.html'; // Redirect if not logged in
+                window.location.href = '/index.html';
                 return;
             }
             app.loadDashboardData();
@@ -145,7 +139,7 @@ const app = {
             document.getElementById('client-codigo').disabled = false;
         }
 
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
 
         form.onsubmit = (e) => {
             e.preventDefault();
@@ -222,13 +216,18 @@ const app = {
 
             accounts.forEach(acc => {
                 const tr = document.createElement('tr');
+                const fecha = new Date(acc.DTT_CUENFECHACREACION).toLocaleString();
                 tr.innerHTML = `
                     <td>${acc.CHR_CUENCODIGO}</td>
                     <td>${acc.VCH_CLIEPATERNO} ${acc.VCH_CLIENOMBRE}</td>
                     <td>${acc.CHR_MONECODIGO === '01' ? 'S/.' : '$'} ${acc.DEC_CUENSALDO}</td>
-                    <td>${acc.VCH_CUENESTADO}</td>
+                    <td>${acc.VCH_MONEDESCRIPCION}</td>
+                    <td>${acc.VCH_SUCUNOMBRE}</td>
+                    <td>${acc.VCH_CREADOR_NOMBRE}</td>
+                    <td>${fecha}</td>
+                    <td><span class="badge ${acc.VCH_CUENESTADO === 'ACTIVO' ? 'badge-success' : 'badge-danger'}">${acc.VCH_CUENESTADO}</span></td>
                      <td>
-                        <button onclick="app.showTransactionModal('${acc.CHR_CUENCODIGO}')">Operar</button>
+                        <button onclick="app.showTransactionModal('${acc.CHR_CUENCODIGO}')" class="btn-sm btn-primary">Operar</button>
                     </td>
                 `;
                 tbody.appendChild(tr);

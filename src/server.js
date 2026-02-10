@@ -1,28 +1,24 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
+require('dotenv').config();
+
 const compression = require('compression');
 const helmet = require('helmet');
 const db = require('./config/database');
 const backupService = require('./services/backupService');
 const replicationService = require('./services/replicationService');
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware de seguridad y compresión
-app.use(helmet({ contentSecurityPolicy: false })); // Permitir recursos inline
-app.use(compression()); // Compresión gzip
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(compression());
 
-// Middleware
 app.use(cors());
-app.use(express.json({ limit: '50mb' })); // Límite alto para backups grandes
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(express.static('public')); // Serve frontend files
+app.use(express.static('public'));
 
-// Basic Route - Info API
 app.get('/api', (req, res) => {
     res.json({
         message: 'Banco Pacifico Core Banking System - DR Enabled',
@@ -32,15 +28,13 @@ app.get('/api', (req, res) => {
     });
 });
 
-// Import Routes
 const apiRoutes = require('./routes/api');
 const replicationRoutes = require('./routes/replication');
 
 app.use('/api', apiRoutes);
-app.use('/api', replicationRoutes); // Rutas de replicación
+app.use('/api', replicationRoutes);
 
-// Initialize and Start Server
-async function startServer() {
+    async function startServer() {
     try {
         console.log('=================================');
         console.log('🏦 BANCO PACÍFICO - SISTEMA DR');

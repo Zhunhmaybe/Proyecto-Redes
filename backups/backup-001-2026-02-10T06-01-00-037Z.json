@@ -1,25 +1,11 @@
 {
   "metadata": {
     "branchId": "001",
-    "timestamp": "2026-02-09T02:45:00.026Z",
+    "timestamp": "2026-02-10T06:01:00.038Z",
     "version": "1.0"
   },
   "data": {
     "Sucursal": [
-      {
-        "CHR_SUCUCODIGO": "001",
-        "VCH_SUCUNOMBRE": "Sipan",
-        "VCH_SUCUCIUDAD": "Chiclayo",
-        "VCH_SUCUDIRECCION": "Av. Balta 1456",
-        "INT_SUCUCONTCUENTA": 2
-      },
-      {
-        "CHR_SUCUCODIGO": "002",
-        "VCH_SUCUNOMBRE": "Chan Chan",
-        "VCH_SUCUCIUDAD": "Trujillo",
-        "VCH_SUCUDIRECCION": "Jr. Independencia 456",
-        "INT_SUCUCONTCUENTA": 3
-      },
       {
         "CHR_SUCUCODIGO": "003",
         "VCH_SUCUNOMBRE": "Los Olivos",
@@ -47,38 +33,32 @@
         "VCH_SUCUCIUDAD": "Cusco",
         "VCH_SUCUDIRECCION": "Calle El Sol 534",
         "INT_SUCUCONTCUENTA": 0
+      },
+      {
+        "CHR_SUCUCODIGO": "001",
+        "VCH_SUCUNOMBRE": "Sipan",
+        "VCH_SUCUCIUDAD": "Chiclayo",
+        "VCH_SUCUDIRECCION": "Av. Balta 1456",
+        "INT_SUCUCONTCUENTA": 0
+      },
+      {
+        "CHR_SUCUCODIGO": "002",
+        "VCH_SUCUNOMBRE": "Chan Chan",
+        "VCH_SUCUCIUDAD": "Trujillo",
+        "VCH_SUCUDIRECCION": "Jr. Independencia 456",
+        "INT_SUCUCONTCUENTA": 3
       }
     ],
     "Empleado": [
       {
-        "CHR_EMPLCODIGO": "9999",
-        "VCH_EMPLPATERNO": "Internet",
-        "VCH_EMPLMATERNO": "Internet",
-        "VCH_EMPLNOMBRE": "internet",
-        "VCH_EMPLCIUDAD": "Internet",
-        "VCH_EMPLDIRECCION": "internet",
-        "VCH_EMPLUSUARIO": "internet",
-        "VCH_EMPLCLAVE": "internet"
-      },
-      {
         "CHR_EMPLCODIGO": "0001",
-        "VCH_EMPLPATERNO": "Romero",
+        "VCH_EMPLPATERNO": "Romero2",
         "VCH_EMPLMATERNO": "Castillo",
         "VCH_EMPLNOMBRE": "Carlos Alberto",
         "VCH_EMPLCIUDAD": "Trujillo",
-        "VCH_EMPLDIRECCION": "Call1 1 Nro. 456",
+        "VCH_EMPLDIRECCION": "Calle 1 Nro. 456",
         "VCH_EMPLUSUARIO": "cromero",
-        "VCH_EMPLCLAVE": "chicho"
-      },
-      {
-        "CHR_EMPLCODIGO": "0002",
-        "VCH_EMPLPATERNO": "Castro",
-        "VCH_EMPLMATERNO": "Vargas",
-        "VCH_EMPLNOMBRE": "Lidia",
-        "VCH_EMPLCIUDAD": "Lima",
-        "VCH_EMPLDIRECCION": "Federico Villarreal 456 - SMP",
-        "VCH_EMPLUSUARIO": "lcastro",
-        "VCH_EMPLCLAVE": "suerte"
+        "VCH_EMPLCLAVE": "123456"
       },
       {
         "CHR_EMPLCODIGO": "0003",
@@ -129,23 +109,32 @@
         "VCH_EMPLDIRECCION": "Av. Salaverry 1416",
         "VCH_EMPLUSUARIO": "gtorres",
         "VCH_EMPLCLAVE": "talento"
+      },
+      {
+        "CHR_EMPLCODIGO": "9999",
+        "VCH_EMPLPATERNO": "Internet",
+        "VCH_EMPLMATERNO": "Internet",
+        "VCH_EMPLNOMBRE": "internet",
+        "VCH_EMPLCIUDAD": "Internet",
+        "VCH_EMPLDIRECCION": "internet",
+        "VCH_EMPLUSUARIO": "internet",
+        "VCH_EMPLCLAVE": "internet"
+      },
+      {
+        "CHR_EMPLCODIGO": "0002",
+        "VCH_EMPLPATERNO": "Castro",
+        "VCH_EMPLMATERNO": "Vargas",
+        "VCH_EMPLNOMBRE": "Lidia",
+        "VCH_EMPLCIUDAD": "Lima",
+        "VCH_EMPLDIRECCION": "Federico Villarreal 456 - SMP",
+        "VCH_EMPLUSUARIO": "lcastro",
+        "VCH_EMPLCLAVE": "suerte"
       }
     ],
     "Cliente": [
       {
-        "CHR_CLIECODIGO": "00001",
-        "VCH_CLIEPATERNO": "CORONELl",
-        "VCH_CLIEMATERNO": "CASTILLO",
-        "VCH_CLIENOMBRE": "ERIC GUSTAVO",
-        "CHR_CLIEDNI": "06914897",
-        "VCH_CLIECIUDAD": "LIMA",
-        "VCH_CLIEDIRECCION": "LOS OLIVOS",
-        "VCH_CLIETELEFONO": "9666-4457",
-        "VCH_CLIEEMAIL": "gcoronel@viabcp.com"
-      },
-      {
         "CHR_CLIECODIGO": "00002",
-        "VCH_CLIEPATERNO": "VALENCIA",
+        "VCH_CLIEPATERNO": "VALENCIA2",
         "VCH_CLIEMATERNO": "MORALES",
         "VCH_CLIENOMBRE": "PEDRO HUGO",
         "CHR_CLIEDNI": "01576173",
@@ -153,17 +142,6 @@
         "VCH_CLIEDIRECCION": "MAGDALENA",
         "VCH_CLIETELEFONO": "924-7834",
         "VCH_CLIEEMAIL": "pvalencia@terra.com.pe"
-      },
-      {
-        "CHR_CLIECODIGO": "00003",
-        "VCH_CLIEPATERNO": "MARCELO",
-        "VCH_CLIEMATERNO": "VILLALOBOS",
-        "VCH_CLIENOMBRE": "RICARDO",
-        "CHR_CLIEDNI": "10762367",
-        "VCH_CLIECIUDAD": "LIMA",
-        "VCH_CLIEDIRECCION": "LINCE",
-        "VCH_CLIETELEFONO": "993-62966",
-        "VCH_CLIEEMAIL": "ricardomarcelo@hotmail.com"
       },
       {
         "CHR_CLIECODIGO": "00004",
@@ -351,33 +329,31 @@
         "VCH_CLIEDIRECCION": "SAN ISIDRO",
         "VCH_CLIETELEFONO": "936-45876",
         "VCH_CLIEEMAIL": "f.zegarra@hotmail.com"
+      },
+      {
+        "CHR_CLIECODIGO": "00003",
+        "VCH_CLIEPATERNO": "MARCELO",
+        "VCH_CLIEMATERNO": "VILLALOBOS",
+        "VCH_CLIENOMBRE": "RICARDO",
+        "CHR_CLIEDNI": "10762367",
+        "VCH_CLIECIUDAD": "LIMA",
+        "VCH_CLIEDIRECCION": "LINCE",
+        "VCH_CLIETELEFONO": "993-62966",
+        "VCH_CLIEEMAIL": "ricardomarcelo@hotmail.com"
+      },
+      {
+        "CHR_CLIECODIGO": "00001",
+        "VCH_CLIEPATERNO": "CORONEL",
+        "VCH_CLIEMATERNO": "CASTILLO",
+        "VCH_CLIENOMBRE": "ERIC GUSTAVO",
+        "CHR_CLIEDNI": "06914897",
+        "VCH_CLIECIUDAD": "LIMA",
+        "VCH_CLIEDIRECCION": "LOS OLIVOS",
+        "VCH_CLIETELEFONO": "9666-4457",
+        "VCH_CLIEEMAIL": "gcoronel@viabcp.com"
       }
     ],
     "Cuenta": [
-      {
-        "CHR_CUENCODIGO": "00100001",
-        "CHR_MONECODIGO": "01",
-        "CHR_SUCUCODIGO": "001",
-        "CHR_EMPLCREACUENTA": "0004",
-        "CHR_CLIECODIGO": "00005",
-        "DEC_CUENSALDO": 6900,
-        "DTT_CUENFECHACREACION": "2008-01-06T21:27:48.000Z",
-        "VCH_CUENESTADO": "ACTIVO",
-        "INT_CUENCONTMOV": 7,
-        "CHR_CUENCLAVE": "123456"
-      },
-      {
-        "CHR_CUENCODIGO": "00100002",
-        "CHR_MONECODIGO": "02",
-        "CHR_SUCUCODIGO": "001",
-        "CHR_EMPLCREACUENTA": "0004",
-        "CHR_CLIECODIGO": "00005",
-        "DEC_CUENSALDO": 4500,
-        "DTT_CUENFECHACREACION": "2008-01-08T19:21:12.000Z",
-        "VCH_CUENESTADO": "ACTIVO",
-        "INT_CUENCONTMOV": 4,
-        "CHR_CUENCLAVE": "123456"
-      },
       {
         "CHR_CUENCODIGO": "00200001",
         "CHR_MONECODIGO": "01",
@@ -425,27 +401,33 @@
         "VCH_CUENESTADO": "CANCELADO",
         "INT_CUENCONTMOV": 3,
         "CHR_CUENCLAVE": "123456"
+      },
+      {
+        "CHR_CUENCODIGO": "00100001",
+        "CHR_MONECODIGO": "01",
+        "CHR_SUCUCODIGO": "001",
+        "CHR_EMPLCREACUENTA": "0004",
+        "CHR_CLIECODIGO": "00005",
+        "DEC_CUENSALDO": 6900,
+        "DTT_CUENFECHACREACION": "2008-01-06T21:27:48.000Z",
+        "VCH_CUENESTADO": "ACTIVO",
+        "INT_CUENCONTMOV": 7,
+        "CHR_CUENCLAVE": "123456"
+      },
+      {
+        "CHR_CUENCODIGO": "00100002",
+        "CHR_MONECODIGO": "02",
+        "CHR_SUCUCODIGO": "001",
+        "CHR_EMPLCREACUENTA": "0004",
+        "CHR_CLIECODIGO": "00005",
+        "DEC_CUENSALDO": 4500,
+        "DTT_CUENFECHACREACION": "2008-01-08T19:21:12.000Z",
+        "VCH_CUENESTADO": "ACTIVO",
+        "INT_CUENCONTMOV": 4,
+        "CHR_CUENCLAVE": "123456"
       }
     ],
     "Movimiento": [
-      {
-        "CHR_CUENCODIGO": "00100001",
-        "INT_MOVINUMERO": 1,
-        "DTT_MOVIFECHA": "2008-01-06T21:27:48.000Z",
-        "CHR_EMPLCODIGO": "0004",
-        "CHR_TIPOCODIGO": "001",
-        "DEC_MOVIIMPORTE": 2800,
-        "CHR_CUENREFERENCIA": null
-      },
-      {
-        "CHR_CUENCODIGO": "00100001",
-        "INT_MOVINUMERO": 2,
-        "DTT_MOVIFECHA": "2008-01-15T18:47:31.000Z",
-        "CHR_EMPLCODIGO": "0004",
-        "CHR_TIPOCODIGO": "003",
-        "DEC_MOVIIMPORTE": 3200,
-        "CHR_CUENREFERENCIA": null
-      },
       {
         "CHR_CUENCODIGO": "00100001",
         "INT_MOVINUMERO": 3,
@@ -768,6 +750,24 @@
         "CHR_EMPLCODIGO": "0002",
         "CHR_TIPOCODIGO": "002",
         "DEC_MOVIIMPORTE": 7000,
+        "CHR_CUENREFERENCIA": null
+      },
+      {
+        "CHR_CUENCODIGO": "00100001",
+        "INT_MOVINUMERO": 1,
+        "DTT_MOVIFECHA": "2008-01-06T21:27:48.000Z",
+        "CHR_EMPLCODIGO": "0004",
+        "CHR_TIPOCODIGO": "001",
+        "DEC_MOVIIMPORTE": 2800,
+        "CHR_CUENREFERENCIA": null
+      },
+      {
+        "CHR_CUENCODIGO": "00100001",
+        "INT_MOVINUMERO": 2,
+        "DTT_MOVIFECHA": "2008-01-15T18:47:31.000Z",
+        "CHR_EMPLCODIGO": "0004",
+        "CHR_TIPOCODIGO": "003",
+        "DEC_MOVIIMPORTE": 3200,
         "CHR_CUENREFERENCIA": null
       }
     ]

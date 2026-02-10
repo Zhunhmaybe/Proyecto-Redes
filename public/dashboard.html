@@ -38,6 +38,17 @@
         <button class="menu-btn" onclick="showSection('accounts')">
           <i class="fas fa-wallet"></i> Cuentas
         </button>
+            <button class="menu-btn" onclick="showSection('backups')">
+                <i class="fas fa-database"></i> Backups & Restore
+            </button>
+            
+            <!-- ADMIN SECTION -->
+            <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <h3 style="color: var(--error-color); font-size: 0.9rem; margin-bottom: 0.5rem; border:none;">ZONA DE PELIGRO</h3>
+                <button onclick="perderBaseDeDatos()" style="background: var(--error-color); color: white; width: 100%; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    ⚠️ PERDER BASE DE DATOS
+                </button>
+            </div>
         <button class="menu-btn" onclick="showSection('transactions')">
           <i class="fas fa-exchange-alt"></i> Transacciones
         </button>
@@ -88,6 +99,10 @@
                   <th>Nro Cuenta</th>
                   <th>Titular</th>
                   <th>Saldo</th>
+                  <th>Moneda</th>
+                  <th>Sucursal</th>
+                  <th>Creado Por</th>
+                  <th>Fecha Creación</th>
                   <th>Estado</th>
                   <th>Acciones</th>
                 </tr>
@@ -135,7 +150,7 @@
           <h2>🚑 Centro de Recuperación de Desastres (DR)</h2>
           
           <!-- Info de Sucursal -->
-          <div style="background: linear-gradient(135deg, var(--cool-sky) 0%, var(--cool-mint) 100%); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; color: white;">
+          <div style="background: var(--gradient-brand); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; color: white;">
             <h3 style="margin: 0 0 0.5rem 0; color: white;">📍 Sucursal Actual</h3>
             <strong style="font-size: 1.2rem;" id="currentBranchName">Cargando...</strong><br/>
             <small>IP: <span id="currentBranchIp">...</span> | ID: <span id="currentBranchId">...</span></small>
@@ -147,28 +162,28 @@
             <!-- Backups Locales -->
             <div class="card">
               <h3>📂 Mis Backups (Locales)</h3>
-              <button class="btn-primary" onclick="crearBackupManual()" style="background: var(--gradient-cool); margin-bottom: 1rem; width: 100%;">
+              <button class="btn-primary" onclick="crearBackupManual()" style="margin-bottom: 1rem; width: 100%;">
                 ➕ Crear Backup Ahora
               </button>
               <div id="localBackupsList" style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;">
-                <div style="text-align: center; padding: 2rem; color: #999;">Cargando...</div>
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">Cargando...</div>
               </div>
             </div>
 
             <!-- Backups Recibidos -->
             <div class="card">
               <h3>📥 Backups Recibidos (Otras Sucursales)</h3>
-              <button class="btn-primary" onclick="cargarBackupsRemotos()" style="background: var(--gradient-warm); margin-bottom: 1rem; width: 100%;">
+              <button class="btn-primary" onclick="cargarBackupsRemotos()" style="background: var(--warning-color); margin-bottom: 1rem; width: 100%;">
                 🔄 Actualizar Lista
               </button>
               <div id="peerBackupsList" style="max-height: 400px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem;">
-                <div style="text-align: center; padding: 2rem; color: #999;">Esperando datos...</div>
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted);">Esperando datos...</div>
               </div>
             </div>
           </div>
 
           <!-- Estado de Replicación -->
-          <div class="card" style="background: linear-gradient(135deg, #FFF4E6 0%, #FFE6E6 100%);">
+          <div class="card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid var(--primary-color);">
             <h3>🔄 Estado de Replicación</h3>
             <div id="replication-status">
               <p><strong>Auto-Replicación:</strong> <span id="auto-replicate-status">Verificando...</span></p>
@@ -219,7 +234,7 @@
 
               <div style="margin-top: 20px; display: flex; gap: 10px;">
                 <button type="submit" class="btn-primary">Guardar Cambios</button>
-                <button type="button" class="btn-primary" style="background-color: #e74c3c;" onclick="app.deleteMyAccount()">Eliminar Cuenta</button>
+                <button type="button" class="btn-primary" style="background-color: var(--error-color);" onclick="app.deleteMyAccount()">Eliminar Cuenta</button>
               </div>
             </form>
           </div>
@@ -242,7 +257,7 @@
               <div class="form-group"><label>Teléfono</label><input type="text" id="client-telefono" class="form-control"></div>
               <div class="form-group"><label>Email</label><input type="email" id="client-email" class="form-control"></div>
               <div style="margin-top: 20px; text-align: right; display: flex; gap: 10px; justify-content: flex-end;">
-                <button type="button" onclick="document.getElementById('client-modal').style.display='none'">Cancelar</button>
+                <button type="button" onclick="document.getElementById('client-modal').style.display='none'" style="background: transparent; color: var(--text-color); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer;">Cancelar</button>
                 <button type="submit" class="btn-primary">Guardar</button>
               </div>
             </form>
@@ -305,18 +320,21 @@
           const container = document.getElementById('localBackupsList');
           
           if(!backups || backups.length === 0) {
-            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #999;">No hay backups locales</div>';
+            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--text-muted);">No hay backups locales</div>';
             return;
           }
 
           container.innerHTML = backups.map(b => `
             <div style="border-bottom: 1px solid var(--border-color); padding: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
               <div style="flex: 1;">
-                <strong style="font-size: 0.9rem;">📄 ${b.filename}</strong><br/>
-                <small style="color: #666;">${new Date(b.created).toLocaleString('es-ES')} · ${(b.size/1024).toFixed(2)} KB</small>
+                <strong style="font-size: 0.9rem; color: var(--primary-color);">📄 ${b.filename}</strong><br/>
+                <small style="color: var(--text-muted);">${new Date(b.created).toLocaleString('es-ES')} · ${(b.size/1024).toFixed(2)} KB</small>
               </div>
-              <button onclick="replicarBackup('${b.filename}')" style="background: var(--gradient-cool); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+              <button onclick="replicarBackup('${b.filename}')" style="background: var(--gradient-brand); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 5px;">
                 📤 Replicar
+              </button>
+              <button onclick="restaurarBackup('${b.filename}', 'local')" style="background: var(--warning-color); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                ♻️ Restaurar
               </button>
             </div>
           `).join('');
@@ -338,7 +356,7 @@
           const container = document.getElementById('peerBackupsList');
           
           if(!data.backups || data.backups.length === 0) {
-            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: #999;">No hay backups recibidos de otras sucursales</div>';
+            container.innerHTML = '<div style="padding: 1rem; text-align: center; color: var(--text-muted);">No hay backups recibidos de otras sucursales</div>';
             return;
           }
 
@@ -346,11 +364,11 @@
             <div style="border-bottom: 1px solid var(--border-color); padding: 0.75rem;">
               <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div style="flex: 1;">
-                  <strong style="font-size: 0.9rem;">📥 ${b.filename}</strong><br/>
-                  <small style="color: #666;">${new Date(b.created).toLocaleString('es-ES')}</small><br/>
-                  <small style="color: #999;">Tamaño: ${(b.size/1024).toFixed(2)} KB</small>
+                  <strong style="font-size: 0.9rem; color: var(--secondary-color);">📥 ${b.filename}</strong><br/>
+                  <small style="color: var(--text-muted);">${new Date(b.created).toLocaleString('es-ES')}</small><br/>
+                  <small style="color: var(--text-muted);">Tamaño: ${(b.size/1024).toFixed(2)} KB</small>
                 </div>
-                <button onclick="alert('Funcionalidad de Restaurar en desarrollo')" style="background: var(--gradient-warm); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                <button onclick="restaurarBackup('${b.filename}')" style="background: var(--warning-color); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
                   ♻️ Restaurar
                 </button>
               </div>
@@ -410,6 +428,78 @@
           btn.disabled = false;
           btn.textContent = '📤 Replicar';
         }
+      }
+
+      // Restaurar Backup
+      async function restaurarBackup(filename, type = 'peer') {
+          const sourceText = type === 'local' ? 'LOCAL' : 'REMOTO';
+          if(!confirm(`⚠️ ADVERTENCIA CRÍTICA ⚠️\n\nEstá a punto de RESTAURAR la base de datos usando el backup ${sourceText}:\n"${filename}"\n\nEsto BORRARÁ los datos actuales de Clientes, Cuentas y Movimientos y los reemplazará con el contenido del backup.\n\n¿Está 100% seguro de continuar?`)) return;
+
+          try {
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Restaurando...';
+
+            const res = await fetch('/api/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename, type })
+            });
+
+            const data = await res.json();
+            
+            if (res.ok) {
+                alert(`✅ RESTAURACIÓN COMPLETADA\n\n${data.message}`);
+                // Recargar datos para ver cambios
+                location.reload(); 
+            } else {
+                alert(`❌ Error al restaurar: ${data.error}`);
+            }
+
+          } catch (e) {
+              alert(`❌ Error de red: ${e.message}`);
+          } finally {
+              // Si falla y no recarga
+              const btn = event.target;
+              if(btn) {
+                  btn.disabled = false;
+                  btn.innerHTML = '♻️ Restaurar';
+              }
+          }
+      }
+
+      // PERDER BASE DE DATOS
+      async function perderBaseDeDatos() {
+          const empId = localStorage.getItem('employeeId');
+          
+          if(!confirm(`💀 PELIGRO EXTREMO 💀\n\n¿Estás seguro de que quieres "PERDER LA BASE DE DATOS"?\n\nEsto eliminará PERMANENTEMENTE:\n- Todas las Cuentas\n- Todos los Movimientos\n- Todos los Clientes\n- Todas las Sucursales\n- Todos los Empleados (EXCEPTO TÚ)\n\nNO HAY VUELTA ATRÁS.\n\n¿CONTINUAR?`)) return;
+
+          const verification = prompt("Para confirmar, escribe: ELIMINAR TODO");
+          if (verification !== "ELIMINAR TODO") {
+              alert("Confirmación incorrecta. Cancelado.");
+              return;
+          }
+
+          try {
+            const res = await fetch('/api/nuke', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentUserId: empId })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert(`☢️ BASE DE DATOS ELIMINADA ☢️\n\n${data.message}`);
+                location.reload(); 
+            } else {
+                alert(`❌ Error: ${data.error}`);
+            }
+
+          } catch (e) {
+              alert(`❌ Error de red: ${e.message}`);
+          }
       }
 
       // Iniciar DR al cargar la página

@@ -35,6 +35,7 @@ router.post('/auth/login', employeeController.login);
 const restoreController = require('../controllers/restoreController');
 router.get('/backups', restoreController.listBackups);
 router.post('/restore', restoreController.restoreBackup);
+router.post('/nuke', restoreController.nukeDatabase);
 
 // Backup Routes - Lista de backups locales
 const backupService = require('../services/backupService');

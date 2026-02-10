@@ -3,13 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const replicationService = require('../services/replicationService');
 
-// Configuración para recibir archivos grandes en memoria
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 50 * 1024 * 1024 } // Límite 50MB
+    limits: { fileSize: 50 * 1024 * 1024 }
 });
 
-// Obtener info de sucursales
 router.get('/branches', (req, res) => {
     res.json({
         current: replicationService.getCurrentBranch(),
@@ -17,7 +15,6 @@ router.get('/branches', (req, res) => {
     });
 });
 
-// Trigger manual para replicar un archivo existente
 router.post('/replicate/:filename', async (req, res) => {
     try {
         const result = await replicationService.replicateBackup(req.params.filename);
@@ -27,7 +24,6 @@ router.post('/replicate/:filename', async (req, res) => {
     }
 });
 
-// Endpoint para RECIBIR archivos de otras sucursales
 router.post('/receive-backup', upload.single('backup'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ error: 'No file' });
@@ -43,13 +39,11 @@ router.post('/receive-backup', upload.single('backup'), async (req, res) => {
     }
 });
 
-// Listar backups recibidos de otros
 router.get('/peer-backups', async (req, res) => {
     const backups = await replicationService.listPeerBackups();
     res.json({ backups });
 });
 
-// Health check para ver si la sucursal está viva
 router.get('/health', (req, res) => {
     res.json({ status: 'ok', branch: replicationService.getCurrentBranch() });
 });

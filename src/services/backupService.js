@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const db = require('../config/database');
 const replicationService = require('./replicationService');
 
+
 dotenv.config();
 
 class BackupService {
@@ -62,6 +63,8 @@ class BackupService {
             await fs.writeFile(filepath, JSON.stringify(backupData, null, 2));
             const stats = await fs.stat(filepath);
             console.log(`✅ Backup local creado: ${filename} (${(stats.size / 1024).toFixed(2)} KB)`);
+
+
 
             // AUTO-REPLICACIÓN
             if (this.autoReplicate) {

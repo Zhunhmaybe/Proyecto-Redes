@@ -1,37 +1,49 @@
 :root {
-    /* Colores Pasteles Cálidos */
-    --warm-peach: #FFD4C8;
-    --warm-coral: #FFB5A7;
-    --warm-rose: #F4C2C2;
-    --warm-cream: #FFF4E6;
+    /* --- Palette: Banco Pacifico Dark Mode --- */
 
-    /* Colores Pasteles Fríos */
-    --cool-mint: #C8E6E6;
-    --cool-lavender: #D4C4FB;
-    --cool-sky: #B8D4F1;
-    --cool-sage: #D4E8D4;
+    /* Backgrounds */
+    --bg-color: #0f172a;
+    /* Deep Navy for main background */
+    --card-bg: #1e293b;
+    /* Dark Slate for cards/containers */
+    --card-hover: #334155;
+    /* Lighter Slate for hover states */
 
-    /* Colores Principales */
-    --primary-color: #8AAAE5;
-    /* Azul pastel frío */
-    --secondary-color: #A8C4E8;
-    --accent-color: #FFB5A7;
-    /* Coral pastel cálido */
-    --text-color: #4A5568;
-    --bg-color: #F8FAFB;
-    --card-bg: #FFFFFF;
-    --error-color: #F4A5A5;
-    --success-color: #A8DDB5;
-    --border-color: #E2E8F0;
+    /* Brand Colors (Blues) */
+    --primary-color: #009EE3;
+    /* Pacifico Cyan/Blue */
+    --primary-hover: #007bb0;
+    --secondary-color: #002f6c;
+    /* Deep Navy Blue */
+    --accent-color: #38bdf8;
+    /* Light Blue Accent */
 
-    /* Gradientes */
-    --gradient-warm: linear-gradient(135deg, #FFD4C8 0%, #F4C2C2 100%);
-    --gradient-cool: linear-gradient(135deg, #B8D4F1 0%, #C8E6E6 100%);
-    --gradient-mixed: linear-gradient(135deg, #B8D4F1 0%, #FFD4C8 100%);
+    /* Text */
+    --text-color: #f1f5f9;
+    /* Off-white for distinct readability */
+    --text-muted: #94a3b8;
+    /* Slate Gray for secondary text */
+
+    /* Borders & Lines */
+    --border-color: #334155;
+    /* Slate border */
+
+    /* Functional Colors */
+    --success-color: #10b981;
+    /* Emerald Green */
+    --warning-color: #f59e0b;
+    /* Amber */
+    --error-color: #ef4444;
+    /* Red */
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, #00529B 0%, #009EE3 100%);
+    --gradient-dark: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --gradient-accent: linear-gradient(135deg, #009EE3 0%, #38bdf8 100%);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -39,89 +51,97 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    line-height: 1.6;
 }
 
-/* Header */
+/* --- Header --- */
 header {
-    background-color: var(--primary-color);
+    background: var(--gradient-brand);
     color: white;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 header h1 {
     margin: 0;
     font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .user-info {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 #logout-btn {
-    background-color: rgba(255, 255, 255, 0.2);
-    border: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    border-radius: 4px;
-    margin-left: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
 }
 
 #logout-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
 }
 
-/* Auth Container (Login) */
+/* --- Login Page --- */
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: var(--gradient-mixed);
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
 }
 
 .login-box {
     background: var(--card-bg);
-    padding: 2.5rem;
+    padding: 3rem;
     border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(138, 170, 229, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     text-align: center;
     border: 1px solid var(--border-color);
 }
 
 .login-box h2 {
-    background: var(--gradient-cool);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Dashboard Layout */
+/* --- Dashboard Layout --- */
 .dashboard-container {
     display: flex;
     flex: 1;
     padding: 2rem;
     gap: 2rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Sidebar / Menu */
+/* --- Sidebar --- */
 .sidebar {
-    width: 250px;
+    width: 260px;
     background: var(--card-bg);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(138, 170, 229, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     padding: 1.5rem;
     height: fit-content;
     border: 1px solid var(--border-color);
@@ -129,176 +149,209 @@ header h1 {
 
 .sidebar h3 {
     margin-top: 0;
-    border-bottom: 3px solid var(--cool-sky);
-    padding-bottom: 10px;
-    color: var(--primary-color);
-    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 12px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
 }
 
 .menu-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 5px;
-    background: none;
-    border: none;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: transparent;
+    border: 1px solid transparent;
     text-align: left;
     cursor: pointer;
-    border-radius: 4px;
-    color: var(--text-color);
-    font-size: 1rem;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.menu-btn i {
+    width: 20px;
+    text-align: center;
 }
 
 .menu-btn:hover {
-    background: var(--cool-mint);
-    color: var(--primary-color);
-    transform: translateX(5px);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
 }
 
 .menu-btn.active {
-    background: var(--gradient-cool);
+    background: var(--gradient-brand);
     color: white;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(138, 170, 229, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 158, 227, 0.3);
+    border-color: transparent;
 }
 
-/* Main Content Area */
+/* --- Main Content --- */
 .main-content {
     flex: 1;
-    background: var(--card-bg);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(138, 170, 229, 0.1);
-    padding: 2rem;
-    border: 1px solid var(--border-color);
-}
-
-/* Forms */
-.form-group {
-    margin-bottom: 1.2rem;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--border-color);
+    background: transparent;
+    /* Card containers handle the background */
     border-radius: 8px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-    background-color: #FAFBFC;
+    /* padding: 0; */
+    /* Removed padding from main-content wrapper, sections will have cards */
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(138, 170, 229, 0.1);
-}
-
-.btn-primary {
-    background: var(--gradient-cool);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(138, 170, 229, 0.2);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(138, 170, 229, 0.3);
-}
-
-.btn-primary:active {
-    transform: translateY(0);
-}
-
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-table th,
-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
-
-table th {
-    background: var(--cool-sky);
-    color: white;
-    font-weight: 600;
-}
-
-/* Alerts */
-.alert {
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    display: none;
-    /* Hidden by default */
-}
-
-.alert-error {
-    background-color: #fde8e7;
-    color: var(--error-color);
-    border: 1px solid #fadbd8;
-}
-
-.alert-success {
-    background-color: #dff0d8;
-    color: var(--success-color);
-    border: 1px solid #d0e9c6;
-}
-
-/* Loading Spinner */
-.loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--secondary-color);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-    display: none;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Sections */
+/* Sections View */
 .section-view {
     display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 .section-view.active {
     display: block;
 }
 
-/* Modal Styles - CENTRADO PERFECTO */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Cards --- */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1.1rem;
+}
+
+/* --- Forms --- */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #0f172a;
+    /* Darker than card */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 158, 227, 0.2);
+}
+
+.form-control::placeholder {
+    color: #475569;
+}
+
+.form-control:disabled {
+    background-color: #1a202c;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+    background: var(--gradient-brand);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 158, 227, 0.3);
+    filter: brightness(1.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-danger {
+    background: var(--error-color);
+    color: white;
+}
+
+/* --- Tables --- */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: #0f172a;
+    color: var(--text-color);
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+    color: var(--text-color);
+}
+
+/* --- Modals --- */
 .modal {
     display: none;
     position: fixed;
@@ -306,76 +359,39 @@ table th {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(138, 170, 229, 0.15);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
     z-index: 1000;
-    /* USAR FLEXBOX PARA CENTRADO PERFECTO */
-    display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal[style*="display: none"] {
-    display: none !important;
 }
 
 .modal-content {
-    background: white;
+    background: var(--card-bg);
     padding: 2rem;
     width: 90%;
-    max-width: 550px;
+    max-width: 600px;
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(138, 170, 229, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
     animation: slideIn 0.3s ease;
+    color: var(--text-color);
     max-height: 90vh;
     overflow-y: auto;
 }
 
 .modal-content h3 {
     color: var(--primary-color);
-    margin: 0 0 1.5rem 0;
-    padding-bottom: 0.75rem;
-    border-bottom: 3px solid var(--cool-sky);
-    background: var(--gradient-cool);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-}
-
-.modal-content button[type="button"]:not(.btn-primary) {
-    background: var(--warm-peach);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.modal-content button[type="button"]:not(.btn-primary):hover {
-    background: var(--warm-coral);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 181, 167, 0.3);
-}
-
-/* Animaciones del Modal */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
 @keyframes slideIn {
     from {
-        transform: translateY(-50px);
+        transform: translateY(-20px);
         opacity: 0;
     }
 
@@ -385,38 +401,59 @@ table th {
     }
 }
 
-/* Cards adicionales */
-.card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(138, 170, 229, 0.1);
-    border: 1px solid var(--border-color);
-    margin-bottom: 1rem;
-}
-
-.card h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-    border-bottom: 2px solid var(--cool-mint);
-    padding-bottom: 0.5rem;
-}
-
-/* Table responsiveness */
-.table-responsive {
-    overflow-x: auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(138, 170, 229, 0.08);
-}
-
-/* Mejoras adicionales para headers */
+/* --- Utilities & Status --- */
 h2 {
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: 1rem;
+    color: var(--text-color);
+    margin-top: 0;
 }
 
-h3 {
-    color: var(--text-color);
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Styles for specific ID elements that might be used in JS */
+#currentBranchName {
+    color: white;
+}
+
+/* --- Badges --- */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
     font-weight: 600;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* --- Small Button --- */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
 }

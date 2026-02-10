@@ -3,22 +3,18 @@ const path = require('path');
 const axios = require('axios');
 const FormData = require('form-data');
 
+
 class ReplicationService {
     constructor() {
-        // Configuración de TODAS las sucursales
-        // MODIFICA ESTAS IPs SEGÚN TU RED REAL
+
         this.branches = {
-            '001': { name: 'Sucursal Quito', ip: '192.168.2.100', port: 3000 },
+            '001': { name: 'Sucursal Quito', ip: '192.168.1.100', port: 3000 },
             '002': { name: 'Sucursal Guayaquil', ip: '192.168.2.101', port: 3000 },
-            '003': { name: 'Sucursal Cuenca', ip: '192.168.5.1', port: 3000 },
-            '004': { name: 'Sucursal Manta', ip: '192.168.4.1', port: 3000 },
-            '005': { name: 'Sucursal Ambato', ip: '192.168.1.1', port: 3000 }
+            //'003': { name: 'Sucursal Guayaquil', ip: '192.168.5.104', port: 3000 },
         };
 
-        // Identifica quién soy yo (lee del .env)
         this.currentBranchId = process.env.BRANCH_ID || '001';
 
-        // Directorios
         this.backupsDir = path.join(__dirname, '../../backups');
         this.peerBackupsDir = path.join(__dirname, '../../peer_backups');
     }
@@ -32,7 +28,6 @@ class ReplicationService {
         }
     }
 
-    // Enviar backup a TODAS las demás sucursales
     async replicateBackup(backupFilename) {
         const backupPath = path.join(this.backupsDir, backupFilename);
 
@@ -69,7 +64,6 @@ class ReplicationService {
         }
     }
 
-    // Enviar a una sucursal específica
     async sendBackupToBranch(branchId, backupPath, backupFilename) {
         const branch = this.branches[branchId];
         const url = `http://${branch.ip}:${branch.port}/api/receive-backup`;
@@ -83,7 +77,7 @@ class ReplicationService {
 
         const response = await axios.post(url, formData, {
             headers: formData.getHeaders(),
-            timeout: 10000, // 10 segundos timeout
+            timeout: 10000,
             maxContentLength: Infinity,
             maxBodyLength: Infinity
         });
@@ -91,7 +85,6 @@ class ReplicationService {
         return response.data;
     }
 
-    // Recibir y guardar backup de otro
     async receiveBackup(fileBuffer, sourceBranch, sourceName) {
         try {
             const filename = `backup-${sourceBranch}-${Date.now()}.json`;
@@ -107,7 +100,6 @@ class ReplicationService {
         }
     }
 
-    // Listar backups recibidos
     async listPeerBackups() {
         try {
             const files = await fs.readdir(this.peerBackupsDir);
